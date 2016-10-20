@@ -1,0 +1,45 @@
+Criação do Projeto
+=================================================================================================================================================
+
+-	Creating Ionic app in folder C:\PROJETOS\Pessoal\WorkspaceAJ\MesadaApp based on
+tabs project
+Downloading: https://github.com/driftyco/ionic-app-base/archive/master.zip
+[=============================]  100%  0.0s
+Downloading: https://github.com/driftyco/ionic-starter-tabs/archive/master.zip
+[=============================]  100%  0.0s
+Installing npm packages...
+
+Adding initial native plugins
+[=============================]  100%  0.0s
+
+Saving your Ionic app state of platforms and plugins
+Saved platform
+Saved plugins
+Saved package.json
+
+? ♫ ? ♫  Your Ionic app is ready to go! ? ♫ ? ♫
+
+Some helpful tips:
+
+Run your app in the browser (great for initial development):
+  ionic serve
+
+Run on a device or simulator:
+  ionic run ios[android,browser]
+
+Test and share your app on device with Ionic View:
+  http://view.ionic.io
+
+Build better Enterprise apps with expert Ionic support:
+  http://ionic.io/enterprise
+
+Create an Ionic Cloud account to add features like User Authentication, Push Not
+ifications, Live Updating, iOS builds, and more?
+(Y/n): n
+=================================================================================================================================================
+
+Configuração IONIC proxy:
+	C:\Users\D001086\AppData\Roaming\npm\node_modules\ionic\node_modules\request\request.js -> var use_proxy = true;
+
+=================================================================================================================================================
+
