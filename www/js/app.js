@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova', 'ngCordova'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -68,18 +68,86 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
       }
     })
-
-  .state('tab.account', {
-    url: '/account',
-    views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
-      }
-    }
-  });
+    .state('tab.teste', {
+	    url: '/teste',
+	    views: {
+	      'tab-teste': {
+	        templateUrl: 'templates/tab-teste.html',
+	        controller: 'TesteCtrl'
+	      }
+	    }
+	  })
+	  .state('tab.account', {
+	    url: '/account',
+	    views: {
+	      'tab-account': {
+	        templateUrl: 'templates/tab-account.html',
+	        controller: 'AccountCtrl'
+	      }
+	    }
+	  });
+  
+  //páginas/views foras das regras de TAB
+  $stateProvider
+	  .state('login', {
+	      url: '/login',
+	      templateUrl: 'templates/login.html',
+	      controller: 'LoginCtrl'
+	  })
+	  .state('login-forgot', {
+	      url: '/login-forgot',
+	      templateUrl: 'templates/login-forgot.html',
+	      controller: 'LoginCtrl'
+	  })
+	  .state('welcome', {
+	      url: '/login',
+	      templateUrl: 'templates/login.html',
+	      controller: 'LoginCtrl'
+	});
+ 
+  
+  
+  
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/dash');
 
+})
+.run(function ($rootScope, $location) {
+ console.log('run...');
+  //Rotas que necessitam do login
+ 
+  var rotasBloqueadasUsuariosNaoLogados = ['/account', '/livros'];
+  var rotasBloqueadasUsuariosComuns = ['/usuarios'];
+  $rootScope.$on('$locationChangeStart', function () {
+	  console.log('$locationChangeStart ' + $location.path());
+	  //iremos chamar essa função sempre que o endereço for alterado
+ 
+      /*  podemos inserir a logica que quisermos para dar ou não permissão ao usuário.
+          Neste caso, vamos usar uma lógica simples. Iremos analisar se o link que o usuário está tentando acessar (location.path())
+          está no Array (rotasBloqueadasUsuariosNaoLogados) caso o usuário não esteja logado. Se o usuário estiver logado, iremos
+          validar se ele possui permissão para acessar os links no Array de strings 'rotasBloqueadasUsuariosComuns'
+      */
+ 
+      if($rootScope.usuarioLogado == null && rotasBloqueadasUsuariosNaoLogados.indexOf($location.path()) != -1){
+          $location.path('/acessoNegado');
+          console.log('$locationChangeStart 1');
+      }else{
+    	  console.log('$locationChangeStart 2');
+          if($rootScope.usuarioLogado != null &&
+               rotasBloqueadasUsuariosComuns.indexOf($location.path()) != -1 &&
+               $rootScope.usuarioLogado.admin == false){
+        	  console.log('$locationChangeStart 3');
+        	  $location.path('/login');
+          }
+         // $location.path('/acessoNegado');
+      }
+    	  
+  });
+  
+  if($rootScope.usuarioLogado == null){
+	  console.log('usuário não autenticado!');
+	  $location.path('/login');
+  }
+  
 });

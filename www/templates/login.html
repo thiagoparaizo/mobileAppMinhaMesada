@@ -1,0 +1,16 @@
+<ion-view view-title="Login" name="login-view">
+  <ion-content class="padding">
+      <form name="formLogin" novalidate>
+	      <div class="list list-inset">
+	          <label class="item item-input">
+	              <input type="text" name="username" placeholder="Username" ng-model="user.username" required>
+	          </label>
+	          <label class="item item-input">
+	              <input type="password" name="password" placeholder="Password" ng-model="user.password" required>
+	          </label>
+	      </div>
+	      <button class="button button-block button-calm" ng-click="login(user)" ng-disabled="formLogin.$invalid">Login</button>
+	      <a href="#/login-forgot" title="Esqueci minha senha.">Esqueci minha senha.</a>
+      </form>
+  </ion-content>
+</ion-view>
