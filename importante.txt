@@ -43,3 +43,6 @@ Configuração IONIC proxy:
 
 =================================================================================================================================================
 
+//http://ionicframework.com/docs/components/#header
+//CONTROLE DE ACESSO COM ANGULAR-ROUTE - http://www.matera.com/br/2016/04/25/controle-de-acesso-com-angular-route/
+
