@@ -99,6 +99,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 	      templateUrl: 'templates/login-forgot.html',
 	      controller: 'LoginCtrl'
 	  })
+	  .state('login-createaccount', {
+	      url: '/login-createaccount',
+	      templateUrl: 'templates/login-createaccount.html',
+	      controller: 'LoginCtrl'
+	  })
 	  .state('welcome', {
 	      url: '/login',
 	      templateUrl: 'templates/login.html',
@@ -115,12 +120,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 })
 .run(function ($rootScope, $location) {
  console.log('run...');
+ $rootScope.userProfile = localStorage.getItem("minhamesadaappuserProfile"); 
   //Rotas que necessitam do login
  
-  var rotasBloqueadasUsuariosNaoLogados = ['/account', '/livros'];
-  var rotasBloqueadasUsuariosComuns = ['/usuarios'];
+  var rotasLiberadasUsuariosNaoLogados = ['/login', '/login-createaccount', '/login-forgot', '/welcome'];
+  var rotasLiberadasUsuariosPerfilControlador = ['/usuarios'];
+  var rotasLiberadasUsuariosPerfilControlado = ['/usuarios'];
+  
   $rootScope.$on('$locationChangeStart', function () {
-	  console.log('$locationChangeStart ' + $location.path());
+	  console.log('$locationChangeStart ' + $location.path());//TODO remover
+	  
 	  //iremos chamar essa função sempre que o endereço for alterado
  
       /*  podemos inserir a logica que quisermos para dar ou não permissão ao usuário.
@@ -129,7 +138,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
           validar se ele possui permissão para acessar os links no Array de strings 'rotasBloqueadasUsuariosComuns'
       */
  
-      if($rootScope.usuarioLogado == null && rotasBloqueadasUsuariosNaoLogados.indexOf($location.path()) != -1){
+	  if($rootScope.userProfile !=null){
+		  //TODO verificar permissoes
+		  console.log('url liberada.');
+	  }else{
+		  if(rotasLiberadasUsuariosNaoLogados.indexOf($location.path()) == -1){
+			  console.log('url bloqueada.');
+			  $location.path('/login');
+		  }else{
+			  console.log('url test: '+rotasLiberadasUsuariosNaoLogados.indexOf($location.path()) );
+		  }
+	  }
+	  
+      /*if(localStorage.getItem("minhamesadaapp.userProfile") == null && rotasBloqueadasUsuariosNaoLogados.indexOf($location.path()) != -1){
           $location.path('/acessoNegado');
           console.log('$locationChangeStart 1');
       }else{
@@ -142,6 +163,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
           }
          // $location.path('/acessoNegado');
       }
+      */
     	  
   });
   

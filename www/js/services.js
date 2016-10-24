@@ -71,58 +71,71 @@ angular.module('starter.services', [])
 			  
 			  var deferred = $q.defer();
 	          var promise = deferred.promise;
-	          var loginOK = false;
-			  
-			  
-		      //usuários fictícios que possam ser usados pela página e pra validar o login
-		      var usuarios = [{username:'adm', password:'123', admin:true},
-		          {username:'Juliano', password:'123', admin:false},
-		          {username:'Bruno', password:'123', admin:false}]
-		      
-		      //Nesse trecho, um for para validar o login
-		      angular.forEach(usuarios, function(value, index){
-		          if(value.username == user.username &&
-		              value.password == user.password){
-		              delete value.password;
-		              $rootScope.usuarioLogado = value;
-		              loginOK = true;
-		              deferred.resolve('Welcome ' + name + '!');
-		              console.log('login sucesso!');
-		             // $location.path('/dash')
-		          }
-		      })
-		      
-		      if(!loginOK){
-		    	  console.log('erro login!');
-		    	  deferred.reject('Wrong credentials.');
-		      }
-		      
+	          
+	          firebase.auth().signInWithEmailAndPassword(user.email, user.password).then(function (result) {
+	        	  console.log('usuario logado... ');
+		          deferred.resolve('Welcome ');
+	        	  
+	          }, function (error) {
+	        	// Handle Errors here.
+	        	  var errorCode = error.code;
+	        	  var errorMessage = error.message;
+	        	  console.log('erro login!'+ errorCode + ' - ' + errorMessage);
+	        	  deferred.reject('Wrong credentials.');
+	          });
+	          
+	          
+	          
+	          //delete value.password;
+	          //console.log('usuario logado... ');
+	          //deferred.resolve('Welcome ' + name + '!');
+              //console.log('login sucesso!');
+              
 		      promise.success = function(fn) {
-	              promise.then(fn);
+		    	  promise.then(fn);
 	              return promise;
 	          }
 	          promise.error = function(fn) {
-	              promise.then(null, fn);
+	        	  promise.then(null, fn);
 	              return promise;
 	          }
 	          return promise;
 		      
 		  },
+		  
 		  logoutUser:function(user){
 			  $rootScope.usuarioLogado = null;
 		      console.log('logout sucesso!');
 		      //impl retorno
 		      return null;
 		  },
+		  
 		  loginForgot: function(user){
 			  console.log(user);
-			  if(true){//verificar
+			  var auth = firebase.auth();
+			  var emailAddress = user.email;
+			  var deferred = $q.defer();
+	          var promise = deferred.promise;
+
+			  auth.sendPasswordResetEmail(emailAddress).then(function() {
 				  console.log('loginForgot sucesso');
-				  return true;
-			  }else{ //verificar existencia do usuário
-				  console.log('loginForgot erro');
-				  return false;
+				  deferred.resolve('loginForgot sucesso');
+				  
+			  }, function(error) {
+			    // An error happened.
+				  console.log('loginForgot erro: '+ error);
+				  deferred.reject('Wrong credentials.');	
+			  });
+			  
+			  promise.success = function(fn) {
+			      promise.then(fn);
+			      return promise;
 			  }
+			  promise.error = function(fn) {
+			      promise.then(null, fn);
+			      return promise;
+			  }
+			  return promise;
 			  
 		  }
 		  

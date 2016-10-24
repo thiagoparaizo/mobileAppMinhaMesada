@@ -35,6 +35,24 @@
     <script src="js/services.js"></script>
     <script src="lib/ngCordova/dist/ng-cordova.js"></script>
     
+    <!-- plugin firebase -->
+    <script src="lib/firebase.js"></script>
+    <script>
+  //Config Firebase ---
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyCbd-aCMgxcaG3VoVgBwMbgwEwbYcbpsig",
+      authDomain: "minhamesada-8a570.firebaseapp.com",
+      databaseURL: "https://minhamesada-8a570.firebaseio.com",
+      storageBucket: "minhamesada-8a570.appspot.com",
+      messagingSenderId: "231974302758"
+    };
+    console.log('iniciando firebase');
+    firebase.initializeApp(config);
+    </script>
+    
+    
+    
   </head>
   <body ng-app="starter">
     <!--

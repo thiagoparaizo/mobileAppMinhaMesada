@@ -1,16 +1,33 @@
 <ion-view view-title="Login" name="login-view">
   <ion-content class="padding">
-      <form name="formLogin" novalidate>
+      <form name="formLogin" ng-show="!isCreateUserShow" novalidate>
 	      <div class="list list-inset">
 	          <label class="item item-input">
-	              <input type="text" name="username" placeholder="Username" ng-model="user.username" required>
+	              <input type="email" name="email" placeholder="E-mail" ng-model="user.email" required>
 	          </label>
 	          <label class="item item-input">
 	              <input type="password" name="password" placeholder="Password" ng-model="user.password" required>
 	          </label>
 	      </div>
-	      <button class="button button-block button-calm" ng-click="login(user)" ng-disabled="formLogin.$invalid">Login</button>
+	      <button class="button button-block button-calm" ng-click="login(user)" ng-disabled="formLogin.$invalid">Login <ion-spinner icon="android" ng-show="showLoaderLogin"></button>
+	      <button class="button button-outline button-positive" ng-click="go('login-createaccount')" title="Esqueci minha senha.">Criar conta.</button>
 	      <a href="#/login-forgot" title="Esqueci minha senha.">Esqueci minha senha.</a>
+	      <button class="button button-block button-calm" ng-click="loginFacebook()" >Login com Facebook</ion-spinner></button>
+      </form>
+      <form name="formCreateUser" ng-show="isCreateUserShow" novalidate>
+	      <div class="list list-inset">
+	          <label class="item item-input">
+	              <input type="email" name="email" placeholder="E-mail" ng-model="user.email" required>
+	          </label>
+	          <label class="item item-input">
+	              <input type="password" name="password1" placeholder="Password" ng-model="user.password1" required>
+	          </label>
+	          <label class="item item-input">
+	              <input type="password" name="password2" placeholder="Password" ng-model="user.password2" required>
+	          </label>
+	      </div>
+	      <button class="button button-block button-calm" ng-click="loginCreateUser(user)" ng-disabled="formCreateUser.$invalid">Login</button>
+	      
       </form>
   </ion-content>
 </ion-view>
