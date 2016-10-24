@@ -140,6 +140,24 @@ angular.module('starter.services', [])
 		  }
 		  
 	} 
+	}).factory('GerenciadoService', function($rootScope) {
+		// Might use a resource here that returns a JSON array
+		  // Some fake testing data
+		return {
+		   get: function(gerenciadoId) {
+			   console.log('GerenciadoService...');
+			   if($rootScope.gerenciados!=null){
+				   for (var i = 0; i < $rootScope.gerenciados.length; i++) {
+				        if ($rootScope.gerenciados[i].gerenciado.uid === gerenciadoId) {
+				        	console.log('GerenciadoService... achou');
+				        	return $rootScope.gerenciados[i].gerenciado;
+				        }
+				      }
+			   }
+			  
+		      return null;
+		    }
+		  };
 	});
 
 //http://ionicframework.com/docs/components/#header

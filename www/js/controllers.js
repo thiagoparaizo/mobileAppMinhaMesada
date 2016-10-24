@@ -8,6 +8,8 @@ angular.module('starter.controllers', [])
 		$state.go(state);
 	};
 	
+	
+	
 	$scope.login = function(user){
 		
 		$scope.showLoaderLogin = true;
@@ -61,9 +63,7 @@ angular.module('starter.controllers', [])
                 template: 'Tudo certo, vamos começar!'
             });
 			
-			
-			
-			
+			loadInitInfoDatabase();
 			
 			$state.go('tab.dash');
 			
@@ -135,6 +135,37 @@ angular.module('starter.controllers', [])
 		$scope.isCreateUserShow = false;
 	}
 	
+	loadInitInfoDatabase = function(){
+		
+		console.log('loadInitInfoDatabase...');
+		var userId = firebase.auth().currentUser.uid;
+		console.log('userId: '+ userId);
+		
+		var retornoUsu = firebase.database().ref('/usuarios_app/'+userId+'/dados_pessoais');
+		retornoUsu.on('value', function(snapshot) {
+			console.log('..... on retornoUsu');
+			$rootScope.dados_pessoais = snapshot.val();
+		});
+		
+		var retornoAux = firebase.database().ref('/usuarios_app/'+userId+'/auxiliar');
+		retornoAux.on('value', function(snapshot) {
+			console.log('..... on retornoAux');
+			$rootScope.auxiliares = snapshot.val();
+			
+		});
+		
+		var retornoGer = firebase.database().ref('/usuarios_app/'+userId+'/lista_gerenciados');
+		retornoGer.on('value', function(snapshot) {
+			console.log('..... on retornoGer');
+			$rootScope.gerenciados = snapshot.val();
+			
+			for (var i = 0; i < $rootScope.gerenciados.length; i++) {
+				//console.log('--> '+ JSON.stringify($scope.gerenciados[i], null, 4));
+				console.log('--> '+ $rootScope.gerenciados[i].gerenciado.dados_pessoais.birthDate);
+			}
+		});
+	}
+	
 })
 
 .controller('DashCtrl', function($scope) {})
@@ -154,8 +185,9 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
+.controller('ChatDetailCtrl', function($scope, $stateParams, Chats, GerenciadoService) {
   $scope.chat = Chats.get($stateParams.chatId);
+  console.log('uid1:'+ $stateParams.chatId);
 })
 
 .controller('TesteCtrl', function($scope, TesteService) {
@@ -166,9 +198,25 @@ angular.module('starter.controllers', [])
   $scope.userProfile = TesteService.get();
 })
 
-.controller('AccountCtrl', function($scope) {
-	$scope.settings = {
-		enableFriends:true
-	}
+.controller('AccountCtrl', function($scope, $state) {
+	
+	$scope.toggleGroup = function(group) {
+	    console.log(group);
+		group.show = !group.show;
+	  };
+	  $scope.isGroupShown = function(group) {
+	    return group.show;
+	  };
+  
+}).controller('GerenciadosCtrl', function($scope, $stateParams, GerenciadoService) {
+	  console.log('GerenciadosCtrl...');
+	  
+	  
+})
+	
+.controller('GerenciadoDetailCtrl', function($scope, $stateParams, GerenciadoService) {
+	console.log('uid:'+$stateParams.gerenciadoId);
+	$scope.gerenciadoAtual = GerenciadoService.get($stateParams.gerenciadoId);
+  
   
 });

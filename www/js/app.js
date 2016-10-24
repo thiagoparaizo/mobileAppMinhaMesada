@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova', 'ngCordova'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'starter.utildb', 'ngCordova', 'ngCordova'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -50,15 +50,23 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
-  .state('tab.chats', {
-      url: '/chats',
+  .state('tab.gerenciados', {
+      url: '/gerenciados',
       views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
+        'tab-gerenciados': {
+          templateUrl: 'templates/gerenciados.html',
+          controller: 'GerenciadosCtrl'
         }
       }
-    })
+    }).state('tab.gerenciado-detail', {
+	      url: '/gerenciados/:gerenciadoId',
+	      views: {
+	        'tab-gerenciados': {
+	          templateUrl: 'templates/gerenciado-detail.html',
+	          controller: 'GerenciadoDetailCtrl'
+	        }
+	      }
+	    })
     .state('tab.chat-detail', {
       url: '/chats/:chatId',
       views: {

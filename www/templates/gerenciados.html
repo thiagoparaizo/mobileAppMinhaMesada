@@ -1,0 +1,12 @@
+<ion-view view-title="Meus Filhos!!">
+  <ion-content>
+    <ion-list>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="gerenciado in gerenciados" type="item-text-wrap" href="#/tab/gerenciados/{{gerenciado.gerenciado.uid}}">
+        <img ng-src="{{gerenciado.gerenciado.dados_pessoais.photoURL}}">
+         <h2>{{gerenciado.gerenciado.dados_pessoais.apelido}}</h2>
+        <p>{{gerenciado.gerenciado.dados_pessoais.firstName + ' ' + gerenciado.gerenciado.dados_pessoais.lastName}}</p>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

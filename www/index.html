@@ -6,7 +6,23 @@
     <title></title>
 
     <link rel="manifest" href="manifest.json">
-
+	
+	<style type="text/css">
+		.list .item.item-accordion {
+  line-height: 38px;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition: 0.09s all linear;
+}
+.list .item.item-accordion.ng-hide {
+  line-height: 0px;
+}
+.list .item.item-accordion.ng-hide-add,
+.list .item.item-accordion.ng-hide-remove {
+  display: block !important;
+}
+	
+	</style>
     <!-- un-comment this code to enable service worker
     <script>
       if ('serviceWorker' in navigator) {
@@ -33,6 +49,7 @@
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/services.js"></script>
+    <script src="js/utildb.js"></script>
     <script src="lib/ngCordova/dist/ng-cordova.js"></script>
     
     <!-- plugin firebase -->

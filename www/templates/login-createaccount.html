@@ -3,17 +3,20 @@
       
       <form name="formCreateUser" novalidate>
 	      <div class="list list-inset">
+      		<label class="item item-input">
+	              <input type="text" name="name" placeholder="Nome" ng-model="user.name" required>
+	          </label>
 	          <label class="item item-input">
 	              <input type="email" name="email" placeholder="E-mail" ng-model="user.email" required>
 	          </label>
 	          <label class="item item-input">
-	              <input type="password" name="password1" placeholder="Password" ng-model="user.password1" required>
+	              <input type="password" name="password1" placeholder="senha" ng-model="user.password1" required>
 	          </label>
 	          <label class="item item-input">
-	              <input type="password" name="password2" placeholder="Password" ng-model="user.password2" required>
+	              <input type="password" name="password2" placeholder="digite novamente a senha" ng-model="user.password2" required>
 	          </label>
 	      </div>
-	      <button class="button button-block button-positive" ng-click="loginCreateUser(user)" ng-disabled="formCreateUser.$invalid">Login</button>
+	      <button class="button button-block button-balanced" ng-click="loginCreateUser(user)" ng-disabled="formCreateUser.$invalid">Login</button>
 	      
       </form>
   </ion-content>
