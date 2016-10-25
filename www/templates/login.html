@@ -2,8 +2,8 @@
   <ion-content class="padding">
       
       
-      <button class="button button-small button-positive" ng-click="loginFacebook()" >Facebook</button>
-      <button class="button button-small button-assertive" ng-click="loginFacebook()" >Google</button>
+      <button class="button button-small button-positive" ng-click="loginFacebook()" >Facebook  <ion-spinner icon="android" ng-show="showLoaderLoginFacebook"></button>
+      <button class="button button-small button-assertive" ng-click="loginFacebook()" >Google  <ion-spinner icon="android" ng-show="showLoaderLoginGoogle"></button>
       
       <form name="formLogin" novalidate>
 	      <div class="list list-inset">

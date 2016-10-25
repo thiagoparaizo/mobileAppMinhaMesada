@@ -11,7 +11,7 @@
    	<p><b>Auxiliares - Dados Pessoais</b></p>
    	nome: {{auxiliares.firstName}}<br />
    	email: {{auxiliares.email}}<br />
-   	data nascimento: {auxiliares.birthDate{}}<br />
+   	data nascimento: {auxiliares.birthDate}<br />
    	telefone: {{auxiliares.phone}}<br />
    	<hr />
    	<p><b>Gerenciados</b></p>
@@ -23,6 +23,7 @@
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
     </ion-list>
+    <button class="button button-outline button-assertive" ng-click="logout()">Outlined Button</button>
    
     
   </ion-content>
