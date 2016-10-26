@@ -3,10 +3,10 @@
     
     
    	<p><b>Dados Pessoais</b></p>
-   	nome: {{dados_pessoais.firstName}}<br />
-   	email: {{dados_pessoais.email}}<br />
-   	data nascimento: {{dados_pessoais.birthDate}}<br />
-   	telefone: {{dados_pessoais.phone}}<br />
+   	nome: {{usu_dp.displayName}}<br />
+   	email: {{usu_dp.email}}<br />
+   	data nascimento: {{usu_dp.birthDate}}<br />
+   	<img ng-src="{{usu_dp.photoURL}}">
    	<hr />
    	<p><b>Auxiliares - Dados Pessoais</b></p>
    	nome: {{auxiliares.firstName}}<br />

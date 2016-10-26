@@ -1,6 +1,5 @@
 angular.module('starter.controllers', [])
 
-
 .controller('LoginCtrl', function($scope, $rootScope, LoginService, $ionicPopup, $state) {
 	$scope.showLoaderLogin = false;
 	$scope.showLoaderLoginFacebook = false;
@@ -10,7 +9,6 @@ angular.module('starter.controllers', [])
 	$scope.go = function ( state ) {
 		$state.go(state);
 	};
-	
 	
 	$scope.gravarLoginCredentias = function(usuario, token){
 		// User is signed in
@@ -125,17 +123,42 @@ angular.module('starter.controllers', [])
         });
 	}
 	
-	$scope.loginCreateUser = function(user){
+	//FUNÇÃO - CRIAR CONTA USUÁRIO (E-MAIL e SENHA)
+	$scope.loginCreateAccount = function(user){
 		if(user.password1 != user.password2){
 			var alertPopup = $ionicPopup.alert({
                 title: 'Ops :(',
                 template: 'As senhas digitadas são diferentes. Tente novamente. '
             });
 		}else{
-			firebase.auth().createUserWithEmailAndPassword(user.email, user.password1).then(function(user) {
-			    var user = firebase.auth().currentUser;
-			    $scope.gravarLoginCredentias(user, null);
-			    console.log('usuario criado...');
+			
+			var errorLocal= false;
+			firebase.auth().createUserWithEmailAndPassword(user.email, user.password1).then(function(user2) {
+				errorLocal = false;
+				var userFirebase = firebase.auth().currentUser;
+			    $scope.gravarLoginCredentias(userFirebase, null);
+			    
+			    console.log('conta criado...');
+			    console.log('conta criado1...'+ user.birthDate);
+			    console.log('conta criado1...'+ user.displayName);
+			    console.log('conta criado1...'+ user.email);
+			    
+			    //https://minhamesada-8a570.firebaseio.com/l_usu_app
+			    //CRIANDO DADOS USUARIO - DB
+			    firebase.database().ref('l_usu_app/'+userFirebase.uid).set({
+			    	"d_pess": {
+			    		"uid" : userFirebase.uid,
+					    "displayName" : user.displayName,
+					    "email": user.email,
+					    "emailVerified" : userFirebase.emailVerified,
+					    "photoURL" : null,
+					    "birthDate" : "",
+					    "perfil":"GENITOR"
+			    	}
+			      }).then(function(){
+			    	  console.log('usuario criado...');
+			      });
+			    
 			    
 			    var alertPopup = $ionicPopup.alert({
 	                title: 'Bem Vindo :)',
@@ -144,6 +167,7 @@ angular.module('starter.controllers', [])
 			    $state.go('tab.dash');
 			    
 			}, function(error) {
+				errorLocal = true;
 				// Handle Errors here.
 				  var errorCode = error.code;
 				  var errorMessage = error.message;
@@ -156,14 +180,6 @@ angular.module('starter.controllers', [])
 		}
 		
 	}
-	
-	//$scope.createUserShow = function(){
-	//	$scope.isCreateUserShow = true;
-	//}
-	
-	//$scope.createUserHide = function(){
-	//	$scope.isCreateUserShow = false;
-	//}
 	
 	$scope.loginFacebook = function(){
 		$scope.showLoaderLoginFacebook = true;
@@ -260,7 +276,7 @@ angular.module('starter.controllers', [])
 			console.log('..... on retornoGer');
 			$rootScope.gerenciados = snapshot.val();
 			
-			for (var i = 0; i < $rootScope.gerenciados.length; i++) {
+			for (var i = 0; $rootScope.gerenciados && i < $rootScope.gerenciados.length; i++) {
 				//console.log('--> '+ JSON.stringify($scope.gerenciados[i], null, 4));
 				console.log('--> '+ $rootScope.gerenciados[i].gerenciado.dados_pessoais.birthDate);
 			}
@@ -299,7 +315,19 @@ angular.module('starter.controllers', [])
   $scope.userProfile = TesteService.get();
 })
 
-.controller('AccountCtrl', function($scope, $rootScope, $state) {
+.controller('AccountCtrl', function($scope, $rootScope, $state, CahceService) {
+	
+	if(!CahceService.recuperarItemCacheLocal("usu_dp") && !CahceService.recuperarItemCacheLocal("aux_dp")){
+		console.log('recuperando info dp_pess');
+		var userId = firebase.auth().currentUser.uid;
+		
+		var ret = firebase.database().ref('l_usu_app/'+userId+'/d_pess');
+		ret.on('value', function(snapshot) {
+			CahceService.gravarItemCacheLocal("usu_dp",snapshot.val());
+			$rootScope.usu_dp = snapshot.val();
+			$state.reload();
+		});
+	}
 	
 	$scope.toggleGroup = function(group) {
 	    console.log(group);

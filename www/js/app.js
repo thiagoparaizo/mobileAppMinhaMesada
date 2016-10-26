@@ -146,7 +146,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
           validar se ele possui permissão para acessar os links no Array de strings 'rotasBloqueadasUsuariosComuns'
       */
  
-	  if($rootScope.userProfile !=null){
+	  if(firebase.auth()){
 		  //TODO verificar permissoes
 		  console.log('url liberada.');
 	  }else{

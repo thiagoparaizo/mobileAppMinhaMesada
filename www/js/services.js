@@ -158,6 +158,48 @@ angular.module('starter.services', [])
 		      return null;
 		    }
 		  };
+	}).factory('CahceService', function($rootScope){
+		
+		//CHAVES - minhamesadaappuserProfile
+		//usu_dp = dados pessoais usuário
+		//aux_dp = dados pessoais aux
+		//dep_dp = dados pessoais dependente
+		
+		return {
+			gravarItemCacheLocal: function(chave, valor){
+				try{
+					localStorage.setItem(chave, JSON.stringify(valor));
+					return true;
+				}catch(e){
+					console.log(e);
+					return false;
+				}
+			},
+			recuperarItemCacheLocal: function(chave){
+				try{
+					var str = localStorage.getItem(chave);
+					if(str){
+						return JSON.parse(chave);
+					}else{
+						return null;
+					}
+				}catch(e){
+					console.log(e);
+					return null;
+				}
+			}, 
+			removerItemCacheLocal: function(chave, valor){
+				try{
+					localStorage.removeItem(chave);
+					return true;
+				}catch(e){
+					console.log(e);
+					return false;
+				}
+			}
+			
+		}
+		
 	});
 
 //http://ionicframework.com/docs/components/#header

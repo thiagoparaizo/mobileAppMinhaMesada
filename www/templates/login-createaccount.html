@@ -4,34 +4,28 @@
       <form name="formCreateUser" novalidate>
 	      <div class="list">
 		      <label class="item item-input item-floating-label">
-			    <span class="input-label">Nome (*)</span>
-			    <input type="text" name="name" placeholder="(* )Nome" ng-model="user.displayName" required>
+			    <input type="text" name="displayName" placeholder="(* )Nome" ng-model="user.displayName" required>
 			  </label>
 			  
 			  <label class="item item-input item-floating-label">
-			    <span class="input-label">Data Nascimento</span>
-			    <input type="text" name="name" placeholder="Data de Nascimento" ng-model="user.birthDate">
+			    <input type="date" name="birthDate" placeholder="Data de Nascimento" ng-model="user.birthDate">
 			  </label>
 			  
 			  <label class="item item-input item-floating-label">
-			    <span class="input-label">E-mail (*)</span>
 			    <input type="email" name="email" placeholder="(*) E-mail" ng-model="user.email" required>
 			  </label>
 			  
 			  <label class="item item-input item-floating-label">
-			    <span class="input-label">Senha</span>
-			    <input type="password" name="password1" placeholder="Senha" ng-model="user.password1" required>
+			    <input type="password" name="password" placeholder="Senha" ng-model="user.password1" required>
 			  </label>
 			  
 			  <label class="item item-input item-floating-label">
-			    <span class="input-label">Repita a senha</span>
-			    <input type="password" name="password1" placeholder="Repita a senha" ng-model="user.password2" required>
+			    <input type="password" name="password2" placeholder="Repita a senha" ng-model="user.password2" required>
 			  </label>
 	      
 	      </div>
-	      <button class="button button-block button-balanced" ng-click="loginCreateUser(user)" ng-disabled="formCreateUser.$invalid">Criar Conta</button>
-	      <div class="bar bar-footer bar-balanced">
-  			<div class="title">Footer</div>
+	      <button class="button button-block button-balanced" ng-click="loginCreateAccount(user)" ng-disabled="formCreateUser.$invalid">Criar Conta</button>
+	   
 		</div>
       </form>
   </ion-content>
