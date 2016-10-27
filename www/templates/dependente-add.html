@@ -1,0 +1,39 @@
+<ion-view view-title="Add Dep">
+  <ion-content>
+  	
+  	<form name="formAddDependente" novalidate>
+  		<div class="list">
+		  <label class="item item-input item-stacked-label">
+		    <input type="text" placeholder="Nome" name="displayName" ng-model="dep.displayName" required>
+		  </label>
+		  <label class="item item-input item-stacked-label">
+		    <input type="text" placeholder="Apelido" name="apelido" ng-model="dep.apelido" required>
+		  </label>
+		  
+		  <label class="item item-input item-stacked-label">
+		    <input type="email" placeholder="E-mail" name="email" ng-model="dep.email" required>
+		  </label>
+		  <label class="item item-input item-stacked-label">
+			    <input type="date" name="birthDate" placeholder="Data de Nascimento" ng-model="dep.birthDate" required>
+		  </label>
+		 <label class="item item-input item-select">
+		    <div class="input-label">
+		      {{'Serie'}}
+		    </div>
+		    <select name="schoolSerie" ng-model="dep.schoolSerie" required>
+		      <option value="1" label="1 (fundamental)"></option>
+		      <option value="2" label="2 (fundamental)"></option>
+		      <option value="3" label="3 (fundamental)"></option>
+		      <option value="4" label="4 (fundamental)"></option>
+		    </select>
+		  </label>
+		  
+		</div>
+		<button class="button button-block button-balanced" ng-click="addDependente(dep)" ng-disabled="formAddDependente.$invalid" title="Add">Add</button>	
+  	</form>
+  	
+  	
+  
+  </ion-content>
+  </ion-view>
+

@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('LoginCtrl', function($scope, $rootScope, LoginService, $ionicPopup, $state) {
+.controller('LoginCtrl', function($scope, $rootScope, LoginService, $ionicPopup, $state, CahceService) {
 	$scope.showLoaderLogin = false;
 	$scope.showLoaderLoginFacebook = false;
 	$scope.showLoaderLoginGoogle = false;
@@ -10,7 +10,13 @@ angular.module('starter.controllers', [])
 		$state.go(state);
 	};
 	
-	$scope.gravarLoginCredentias = function(usuario, token){
+	//função para reload
+	$scope.goReload = function () {
+		$state.go($state.current, {}, {reload: true});
+	};
+	
+	
+	/*$scope.gravarLoginCredentias = function(usuario, token){
 		// User is signed in
     	localStorage.setItem("minhamesadaappuserProfile", JSON.stringify(usuario));
     	var userProfileLocal = localStorage.getItem("minhamesadaappuserProfile");
@@ -21,7 +27,7 @@ angular.module('starter.controllers', [])
         	var userProfileTokenLocal = localStorage.getItem("minhamesadaappuserProfileToken");
         	$rootScope.userProfileTokenLocal = JSON.parse(userProfileTokenLocal);
     	}
-	}
+	}*/
 	
 	$scope.login = function(user){
 		
@@ -35,28 +41,25 @@ angular.module('starter.controllers', [])
 				    // User is signed in.
 					  //3	var userFirebase = firebase.auth().currentUser;
 			            if (userFirebase != null) {
-			                // User is signed in
-			            	$scope.gravarLoginCredentias(userFirebase, null);
-			            	
-			            	console.log('userFirebase '+ userFirebase);//TODO resolver
-			            	console.log('$rootScope.userProfile '+ $rootScope.userProfile);//TODO resolver
-			            	
+			            	console.log('1 Recuperando dados do usuário...');
+			            	carregarDadosDB();
+			                
 			            	//remover depois
-			            	console.log('userFirebase uid:'+ userFirebase.uid);
-			            	console.log('userFirebase displayName:'+ userFirebase.displayName);
-			            	console.log('userFirebase photoURL:'+ userFirebase.photoURL);
-			            	console.log('userFirebase email:'+ userFirebase.email);
-			            	console.log('userFirebase emailVerified:'+ userFirebase.emailVerified);
+			            	//console.log('userFirebase uid:'+ userFirebase.uid);
+			            	//console.log('userFirebase displayName:'+ userFirebase.displayName);
+			            	//console.log('userFirebase photoURL:'+ userFirebase.photoURL);
+			            	//console.log('userFirebase email:'+ userFirebase.email);
+			            	//console.log('userFirebase emailVerified:'+ userFirebase.emailVerified);
 			            	
 			            	
-			            	userFirebase.providerData.forEach(function (profile) {
-			            	    console.log("Sign-in provider: "+profile.providerId);
-			            	    console.log("  Provider-specific.UID: "+profile.uid);
-			            	    console.log("  Provider.Name: "+profile.displayName);
-			            	    console.log("  Provider.Email: "+profile.email);
-			            	    console.log("  Provider.Photo URL: "+profile.photoURL);
+			            	//userFirebase.providerData.forEach(function (profile) {
+			            	  //  console.log("Sign-in provider: "+profile.providerId);
+			            	   // console.log("  Provider-specific.UID: "+profile.uid);
+			            	    //console.log("  Provider.Name: "+profile.displayName);
+			            	    //console.log("  Provider.Email: "+profile.email);
+			            	    //console.log("  Provider.Photo URL: "+profile.photoURL);
 			            	    
-			            	  });
+			            	  //});
 			            	
 			            	$state.go('tab.dash');
 			            	
@@ -73,8 +76,6 @@ angular.module('starter.controllers', [])
                 template: 'Tudo certo, vamos começar!'
             });
 			
-			loadInitInfoDatabase();
-			
 			$state.go('tab.dash');
 			
         }).error(function(data) {
@@ -88,10 +89,13 @@ angular.module('starter.controllers', [])
 	  }
 	
 	$rootScope.logout = function(){
+		var userId = firebase.auth().currentUser.uid;
+		
 		firebase.auth().signOut().then(function() {
 			  // Sign-out successful.
-			localStorage.setItem("minhamesadaappuserProfile", null);
-			localStorage.setItem("minhamesadaappuserProfileToken", null);
+			CahceService.removerItemCacheLocal(userId);
+			$rootScope.cahceLocal = null;
+			
 			console.log('usuário deslogado!');
 			var alertPopup = $ionicPopup.alert({
                 title: 'Até mais ;)',
@@ -132,31 +136,31 @@ angular.module('starter.controllers', [])
             });
 		}else{
 			
-			var errorLocal= false;
+			
 			firebase.auth().createUserWithEmailAndPassword(user.email, user.password1).then(function(user2) {
-				errorLocal = false;
+				
 				var userFirebase = firebase.auth().currentUser;
 			    $scope.gravarLoginCredentias(userFirebase, null);
 			    
-			    console.log('conta criado...');
-			    console.log('conta criado1...'+ user.birthDate);
-			    console.log('conta criado1...'+ user.displayName);
-			    console.log('conta criado1...'+ user.email);
 			    
 			    //https://minhamesada-8a570.firebaseio.com/l_usu_app
 			    //CRIANDO DADOS USUARIO - DB
+			    var dataFormatada = null;
+			    try{
+			    	dataFormatada= user.birthDate!= null? user.birthDate.toISOString().substring(0, 10): null; //yyyy-MM-dd 2016-10-27
+			    }catch(e){}
 			    firebase.database().ref('l_usu_app/'+userFirebase.uid).set({
 			    	"d_pess": {
 			    		"uid" : userFirebase.uid,
 					    "displayName" : user.displayName,
 					    "email": user.email,
 					    "emailVerified" : userFirebase.emailVerified,
-					    "photoURL" : null,
+					    "photoURL" : dataFormatada,
 					    "birthDate" : "",
 					    "perfil":"GENITOR"
 			    	}
 			      }).then(function(){
-			    	  console.log('usuario criado...');
+			    	  console.log('dados do perfildo usuário criado com sucesso...');
 			      });
 			    
 			    
@@ -216,7 +220,7 @@ angular.module('starter.controllers', [])
 				
 			  console.log('Facebook login...3');
 				loadInitInfoDatabase();
-				$state.go('tab.gerenciados');
+				$state.go('tab.dependentes');
 				
 				
 		  }
@@ -252,35 +256,37 @@ angular.module('starter.controllers', [])
 		
 	}
 	
-	loadInitInfoDatabase = function(){
-		
-		console.log('loadInitInfoDatabase...');
+	carregarDadosDB = function(){
+		console.log('1.1 carregarDadosDB - Recuperando dados do usuário...');
 		var userId = firebase.auth().currentUser.uid;
-		console.log('userId: '+ userId);
 		
-		var retornoUsu = firebase.database().ref('/usuarios_app/'+userId+'/dados_pessoais');
-		retornoUsu.on('value', function(snapshot) {
+		var ret = firebase.database().ref('/l_usu_app/'+userId);
+		ret.on('value', function(snapshot) {
+			console.log('1.2 carregarDadosDB - Recuperando dados do usuário...');
+			
 			console.log('..... on retornoUsu');
-			$rootScope.dados_pessoais = snapshot.val();
+			$rootScope.cahceLocal = snapshot.val();
+			CahceService.gravarItemCacheLocal(userId, snapshot.val());
 		});
 		
-		var retornoAux = firebase.database().ref('/usuarios_app/'+userId+'/auxiliar');
+		/*var retornoAux = firebase.database().ref('/usuarios_app/'+userId+'/auxiliar');
 		retornoAux.on('value', function(snapshot) {
 			console.log('..... on retornoAux');
 			$rootScope.auxiliares = snapshot.val();
 			
 		});
 		
-		var retornoGer = firebase.database().ref('/usuarios_app/'+userId+'/lista_gerenciados');
+		var retornoGer = firebase.database().ref('/usuarios_app/'+userId+'/l_dep');
 		retornoGer.on('value', function(snapshot) {
 			console.log('..... on retornoGer');
-			$rootScope.gerenciados = snapshot.val();
+			$rootScope.dependentes = snapshot.val();
 			
-			for (var i = 0; $rootScope.gerenciados && i < $rootScope.gerenciados.length; i++) {
+			for (var i = 0; $rootScope.dependentes && i < $rootScope.dependentes.length; i++) {
 				//console.log('--> '+ JSON.stringify($scope.gerenciados[i], null, 4));
-				console.log('--> '+ $rootScope.gerenciados[i].gerenciado.dados_pessoais.birthDate);
+				console.log('--> '+ $rootScope.dependentes[i].dependente.d_pess.birthDate);
 			}
 		});
+		*/
 	}
 	
 })
@@ -302,7 +308,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats, GerenciadoService) {
+.controller('ChatDetailCtrl', function($scope, $stateParams, Chats, DependenteService) {
   $scope.chat = Chats.get($stateParams.chatId);
   console.log('uid1:'+ $stateParams.chatId);
 })
@@ -316,36 +322,82 @@ angular.module('starter.controllers', [])
 })
 
 .controller('AccountCtrl', function($scope, $rootScope, $state, CahceService) {
+	console.log('load ctrl account...');
 	
-	if(!CahceService.recuperarItemCacheLocal("usu_dp") && !CahceService.recuperarItemCacheLocal("aux_dp")){
-		console.log('recuperando info dp_pess');
-		var userId = firebase.auth().currentUser.uid;
-		
-		var ret = firebase.database().ref('l_usu_app/'+userId+'/d_pess');
-		ret.on('value', function(snapshot) {
-			CahceService.gravarItemCacheLocal("usu_dp",snapshot.val());
-			$rootScope.usu_dp = snapshot.val();
-			$state.reload();
-		});
+	$scope.showDadosUsuario = function(){
+		if($rootScope.cahceLocal!=null && $rootScope.cahceLocal.d_pess!=null){
+			return true;
+		}
+		return false;
 	}
 	
-	$scope.toggleGroup = function(group) {
-	    console.log(group);
-		group.show = !group.show;
-	  };
-	  $scope.isGroupShown = function(group) {
-	    return group.show;
-	  };
+	//função para simular href nos botoes
+	$scope.go = function ( state ) {
+		$state.go(state);
+	};
+	
+	//função para reload
+	$scope.goReload = function () {
+		console.log('reloading:' );
+		$rootScope.cahceLocal.aux = '';
+		$state.go($state.current, {}, {reload: true});
+	};
   
-}).controller('GerenciadosCtrl', function($scope, $stateParams, GerenciadoService) {
-	  console.log('GerenciadosCtrl...');
+}).controller('DependentesCtrl', function($scope, $stateParams, $state, $ionicPopup, DependenteService) {
+	  console.log('DependentesCtrl...');
+	  
+	  $scope.dep;
+	  $scope.addDependente = function(dep){
+		  
+		  	var userFirebase = firebase.auth().currentUser;
+			
+		  	var dataFormatada = null;
+			try{
+			dataFormatada= dep.birthDate!= null? dep.birthDate.toISOString().substring(0, 10): null; //yyyy-MM-dd 2016-10-27
+			}catch(e){}
+			
+			var pushKey = firebase.database().ref('/l_usu_app/'+userFirebase.uid + '/l_dep/').child('dep').push().key;
+			
+			var postData = {
+								"uid" : pushKey,
+								"d_pess": {
+						    		"uid" : pushKey,
+								    "displayName" : dep.displayName,
+								    "email": dep.email,
+								    "emailVerified" : userFirebase.emailVerified,
+								    "photoURL" : "-",
+								    "birthDate" : dataFormatada,
+								    "perfil":"DEPENDENTE"
+						    	},
+								"conectado":false,
+								"dt_conectado":"-",
+								"dt_desconectado":"-",
+								"dt_ultimo_acesso":"-",
+								"ref_atv_mensal_key":"-"
+							}
+			var updates = {};
+			updates = postData;
+			firebase.database().ref('/l_usu_app/'+userFirebase.uid + '/l_dep/'+ pushKey +'/').update(updates).then(function(){
+			console.log('dados do dependente criado com sucesso...');
+			});
+			
+			
+			var alertPopup = $ionicPopup.alert({
+			title: 'Dependente Criado :)',
+			template: 'Só mais alguns passos...'
+			});
+			$state.go('tab.dependentes');
+		  
+		  
+	  }
+	  
 	  
 	  
 })
 	
-.controller('GerenciadoDetailCtrl', function($scope, $stateParams, GerenciadoService) {
-	console.log('uid:'+$stateParams.gerenciadoId);
-	$scope.gerenciadoAtual = GerenciadoService.get($stateParams.gerenciadoId);
+.controller('DependenteDetailCtrl', function($scope, $stateParams, DependenteService) {
+	console.log('uid:'+$stateParams.dependenteId);
+	$scope.depAtual = DependenteService.get($stateParams.dependenteId);
   
   
 });

@@ -50,20 +50,32 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
-  .state('tab.gerenciados', {
-      url: '/gerenciados',
+  .state('tab.dependentes', {
+      url: '/dependentes',
       views: {
-        'tab-gerenciados': {
-          templateUrl: 'templates/gerenciados.html',
-          controller: 'GerenciadosCtrl'
+        'tab-dependentes': {
+          templateUrl: 'templates/dependentes.html',
+          controller: 'DependentesCtrl'
         }
       }
-    }).state('tab.gerenciado-detail', {
-	      url: '/gerenciados/:gerenciadoId',
+    })
+    
+    .state('tab.dependentes-add', {
+	      url: '/dependentes/dependente-add',
 	      views: {
-	        'tab-gerenciados': {
-	          templateUrl: 'templates/gerenciado-detail.html',
-	          controller: 'GerenciadoDetailCtrl'
+	        'tab-dependentes': {
+	          templateUrl: 'templates/dependente-add.html',
+	          controller: 'DependentesCtrl'
+	        }
+	      }
+	    })
+	  
+	  .state('tab.dependentes-detail', {
+	      url: '/dependentes/:dependenteId',
+	      views: {
+	        'tab-dependentes': {
+	          templateUrl: 'templates/dependente-detail.html',
+	          controller: 'DependenteDetailCtrl'
 	        }
 	      }
 	    })

@@ -1,29 +1,46 @@
 <ion-view view-title="Configuracoes da Conta">
   <ion-content>
     
+    <div ng-show="{{cahceLocal.d_pess}}">
+    	<p><b>Dados Pessoais</b></p>
+	   	nome: {{cahceLocal.d_pess.displayName}}<br />
+	   	email: {{cahceLocal.d_pess.email}}<br />
+	   	data nascimento: {{cahceLocal.d_pess.birthDate}}<br />
+	   	<img ng-src="{{cahceLocal.d_pess.photoURL}}">
+	   	<hr />
+	   	
+	   	<div ng-show="{{cahceLocal.aux}}">
+		   	<p><b>Auxiliares - Dados Pessoais</b></p>
+			   	nome: {{auxiliares.firstName}}<br />
+			   	email: {{auxiliares.email}}<br />
+			   	data nascimento: {auxiliares.birthDate}<br />
+			   	telefone: {{auxiliares.phone}}<br />
+			   	<hr />
+	   	</div>
+	   	<div ng-show="{{!cahceLocal.aux}}">
+	   		Não possuí Auxiliar cadastrado!
+	   	</div>
+	   	
+	   	<div ng-show="{{cahceLocal.l_dep}}">
+		   	<p><b>Dependentes</b></p>
+		   	<ion-list>
+		     <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="dep in dependentes" type="item-text-wrap" href="#/tab/dependentes/{{dep.dependente.uid}}">
+		        <img ng-src="{{dep.dependente.d_pess.photoURL}}">
+		         <h2>{{dep.dependente.d_pess.apelido}}</h2>
+		        <p>{{dep.dependente.d_pess.firstName + ' ' + dep.dependente.d_pess.lastName}}</p>
+		        <i class="icon ion-chevron-right icon-accessory"></i>
+		      </ion-item>
+		    </ion-list>
+	   	</div>
+	   	<div ng-show="{{!cahceLocal.dependente}}">
+	   		Não possuí dependentes cadastrados!
+	   	</div>
+    </div>
+    <div ng-show="{{!cahceLocal.d_pess}}">
+	   	<button class="button button-outline button-block button-positive" ng-click="goReload()" title="Esqueci minha senha.">recarregar.</button>
+	</div>
     
-   	<p><b>Dados Pessoais</b></p>
-   	nome: {{usu_dp.displayName}}<br />
-   	email: {{usu_dp.email}}<br />
-   	data nascimento: {{usu_dp.birthDate}}<br />
-   	<img ng-src="{{usu_dp.photoURL}}">
-   	<hr />
-   	<p><b>Auxiliares - Dados Pessoais</b></p>
-   	nome: {{auxiliares.firstName}}<br />
-   	email: {{auxiliares.email}}<br />
-   	data nascimento: {auxiliares.birthDate}<br />
-   	telefone: {{auxiliares.phone}}<br />
-   	<hr />
-   	<p><b>Gerenciados</b></p>
-   	<ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="gerenciado in gerenciados" type="item-text-wrap" href="#/tab/gerenciados/{{gerenciado.gerenciado.uid}}">
-        <img ng-src="{{gerenciado.gerenciado.dados_pessoais.photoURL}}">
-         <h2>{{gerenciado.gerenciado.dados_pessoais.apelido}}</h2>
-        <p>{{gerenciado.gerenciado.dados_pessoais.firstName + ' ' + gerenciado.gerenciado.dados_pessoais.lastName}}</p>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-      </ion-item>
-    </ion-list>
-    <button class="button button-outline button-assertive" ng-click="logout()">Outlined Button</button>
+    <button class="button button-outline button-assertive" ng-click="logout()">Logout</button>
    
     
   </ion-content>

@@ -140,16 +140,16 @@ angular.module('starter.services', [])
 		  }
 		  
 	} 
-	}).factory('GerenciadoService', function($rootScope) {
+	}).factory('DependenteService', function($rootScope) {
 		// Might use a resource here that returns a JSON array
 		  // Some fake testing data
 		return {
-		   get: function(gerenciadoId) {
-			   console.log('GerenciadoService...');
+		   get: function(dependenteId) {
+			   console.log('DependenteService...');
 			   if($rootScope.gerenciados!=null){
 				   for (var i = 0; i < $rootScope.gerenciados.length; i++) {
-				        if ($rootScope.gerenciados[i].gerenciado.uid === gerenciadoId) {
-				        	console.log('GerenciadoService... achou');
+				        if ($rootScope.gerenciados[i].gerenciado.uid === dependenteId) {
+				        	console.log('DependenteService... achou');
 				        	return $rootScope.gerenciados[i].gerenciado;
 				        }
 				      }
