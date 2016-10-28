@@ -8,7 +8,21 @@
   <ion-content class="padding">
     <img ng-src="{{depAtual.d_pess.photoURL}}" style="width: 64px; height: 64px">
     <p>
-      {{depAtual.d_pess.firstName}}
+      {{depAtual.d_pess.displayName}}
     </p>
+    <p>
+      conectado: {{depAtual.conectado}} | dt_ultimo_acesso: {{depAtual.dt_ultimo_acesso}} 
+    </p>
+    
+    
+    <div ng-show="{{depAtual.atvs_mensal}}">
+    	listar...
+    </div> 
+    <div ng-show="{{!depAtual.atvs_mensal}}">
+    	nenhuma lista ncontrada! <a href="#/tab/dependentes/atividade-mensal-add" title="Criar" class="balanced">Criar</a>
+    	<button class="button button-outline button-block button-positive" ng-click="go('tab.atividade-mensal-add')" title="Esqueci minha senha.">Criar conta.</button>
+    </div> 
+    
+    
   </ion-content>
 </ion-view>

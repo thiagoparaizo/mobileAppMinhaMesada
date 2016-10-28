@@ -343,7 +343,7 @@ angular.module('starter.controllers', [])
 		$state.go($state.current, {}, {reload: true});
 	};
   
-}).controller('DependentesCtrl', function($scope, $stateParams, $state, $ionicPopup, DependenteService) {
+}).controller('DependentesCtrl', function($scope, $rootScope, $stateParams, $state, $ionicPopup, DependenteService) {
 	  console.log('DependentesCtrl...');
 	  
 	  $scope.dep;
@@ -356,13 +356,14 @@ angular.module('starter.controllers', [])
 			dataFormatada= dep.birthDate!= null? dep.birthDate.toISOString().substring(0, 10): null; //yyyy-MM-dd 2016-10-27
 			}catch(e){}
 			
-			var pushKey = firebase.database().ref('/l_usu_app/'+userFirebase.uid + '/l_dep/').child('dep').push().key;
+			var pushKey = firebase.database().ref('/l_usu_app/'+userFirebase.uid + '/').child('l_dep').push().key;
 			
 			var postData = {
 								"uid" : pushKey,
 								"d_pess": {
 						    		"uid" : pushKey,
 								    "displayName" : dep.displayName,
+								    "apelido" : dep.apelido,
 								    "email": dep.email,
 								    "emailVerified" : userFirebase.emailVerified,
 								    "photoURL" : "-",
@@ -375,12 +376,15 @@ angular.module('starter.controllers', [])
 								"dt_ultimo_acesso":"-",
 								"ref_atv_mensal_key":"-"
 							}
-			var updates = {};
-			updates = postData;
-			firebase.database().ref('/l_usu_app/'+userFirebase.uid + '/l_dep/'+ pushKey +'/').update(updates).then(function(){
+			firebase.database().ref('/l_usu_app/'+userFirebase.uid + '/l_dep/'+ pushKey +'/').set(postData).then(function(){
 			console.log('dados do dependente criado com sucesso...');
 			});
 			
+			if(!$rootScope.cahceLocal.l_dep){
+				$rootScope.cahceLocal.l_dep = [];
+				$rootScope.cahceLocal.l_dep.push(postData);
+				
+			}
 			
 			var alertPopup = $ionicPopup.alert({
 			title: 'Dependente Criado :)',
@@ -395,9 +399,15 @@ angular.module('starter.controllers', [])
 	  
 })
 	
-.controller('DependenteDetailCtrl', function($scope, $stateParams, DependenteService) {
+.controller('DependenteDetailCtrl', function($scope, $stateParams, $state, DependenteService) {
 	console.log('uid:'+$stateParams.dependenteId);
 	$scope.depAtual = DependenteService.get($stateParams.dependenteId);
+	
+	
   
-  
-});
+}).controller('AtividadeMensalCtrl', function($scope, $stateParams, $state) {
+	console.log('ctrl Atividade Mensal');
+	
+	
+	
+});;

@@ -145,14 +145,20 @@ angular.module('starter.services', [])
 		  // Some fake testing data
 		return {
 		   get: function(dependenteId) {
-			   console.log('DependenteService...');
-			   if($rootScope.gerenciados!=null){
-				   for (var i = 0; i < $rootScope.gerenciados.length; i++) {
-				        if ($rootScope.gerenciados[i].gerenciado.uid === dependenteId) {
-				        	console.log('DependenteService... achou');
-				        	return $rootScope.gerenciados[i].gerenciado;
-				        }
-				      }
+			   console.log('DependenteService... id'+ dependenteId);
+			   if($rootScope.cahceLocal != null && $rootScope.cahceLocal.l_dep!=null){
+				   console.log('DependenteService... procurando');
+				   
+				   var objRet;
+				   angular.forEach($rootScope.cahceLocal.l_dep, function (value, key) {
+			           if(key===dependenteId){
+			        	   console.log('DependenteService... achou:'+ key);
+			        	   objRet = value;
+			           }
+			           
+			        });  
+				   console.log('obj:' + JSON.stringify(objRet, null, 4));
+				   return objRet;
 			   }
 			  
 		      return null;

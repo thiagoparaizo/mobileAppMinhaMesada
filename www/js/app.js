@@ -20,7 +20,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
-  });
+  } 
+  );
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -79,6 +80,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 	        }
 	      }
 	    })
+	    
+	   .state('tab.atividade-mensal-add', {
+	      url: '/dependentes/atividade-mensal-add',
+	      views: {
+	        'tab-dependentes': {
+	          templateUrl: 'templates/atividade-mensal-add.html',
+	          controller: 'AtividadeMensalCtrl'
+	        }
+	      }
+	    }) 
+	    
+	    
     .state('tab.chat-detail', {
       url: '/chats/:chatId',
       views: {
@@ -138,10 +151,22 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   $urlRouterProvider.otherwise('/tab/dash');
 
 })
-.run(function ($rootScope, $location) {
+.run(function ($rootScope, $location, $state) {
  console.log('run...');
+ 
+ $rootScope.go = function ( state ) {
+		$state.go(state);
+	};
+	
+	//função para reload
+	$rootScope.goReload = function () {
+		$state.go($state.current, {}, {reload: true});
+	};
+ 
  $rootScope.userProfile = localStorage.getItem("minhamesadaappuserProfile"); 
   //Rotas que necessitam do login
+ 
+ 
  
   var rotasLiberadasUsuariosNaoLogados = ['/login', '/login-createaccount', '/login-forgot', '/welcome'];
   var rotasLiberadasUsuariosPerfilControlador = ['/usuarios'];

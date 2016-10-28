@@ -3,15 +3,17 @@
     
     <div ng-show="{{cahceLocal.l_dep}}">
     	<ion-list>
-	      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="dep in dependentes" type="item-text-wrap" href="#/tab/dependentes/{{dep.dependente.uid}}">
-	        <img ng-src="{{dep.dependente.d_pess.photoURL}}">
-	         <h2>{{dep.dependente.d_pess.apelido}}</h2>
-	        <p>{{dep.dependente.d_pess.firstName + ' ' + dep.dependente.d_pess.lastName}}</p>
+	      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="dep in cahceLocal.l_dep" type="item-text-wrap" href="#/tab/dependentes/{{dep.uid}}">
+	        
+	        <img ng-src="{{dep.d_pess.photoURL}}">
+	         <h2>{{dep.d_pess.apelido}}</h2>
+	        <p>{{dep.d_pess.displayName}}</p>
 	        <i class="icon ion-chevron-right icon-accessory"></i>
 	      </ion-item>
 	    </ion-list>
+	    <a href="#/tab/dependentes/dependente-add" title="Add." class="balanced">Add+</a>
     </div>
-    <div ng-show="{{!cahceLocal.dependente}}">
+    <div ng-show="{{!cahceLocal.l_dep}}">
    		Não possuí dependentes cadastrados!
    		<a href="#/tab/dependentes/dependente-add" title="Add." class="balanced">Add</a>
    	</div>
