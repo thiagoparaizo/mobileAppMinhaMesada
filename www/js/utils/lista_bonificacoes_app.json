@@ -1,0 +1,21 @@
+[
+			{
+	  			"bon":{
+	  				"id":1,
+					"descricao":"Descrição da bonificacao",
+					"detalhes":"Detalhes longo da bonificacao",
+					"contabilizaMesada":true,
+					"pontuacaoReferencia":5.5,
+					"valorReferencia":0
+	  			}
+	  		},{
+		  		"bon":{
+		  				"id":2,
+						"descricao":"Descrição da bonificacao",
+						"detalhes":"Detalhes longo da bonificacao",
+						"contabilizaMesada":true,
+						"pontuacaoReferencia":6.5,
+						"valorReferencia":0
+	  			}
+  			}
+]

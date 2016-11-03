@@ -3,7 +3,24 @@
     <p>
       {{depAtual.d_pess.displayName}} - Criar Atividade Mensal
     </p>
-   
+ 	
+ 	<label class="item item-input">
+	  <i class="icon ion-search placeholder-icon"></i>
+	  <input type="search" placeholder="Buscar" ng-model="filtro">
+	</label>
+ 	
+	<ion-list show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">
+  		<ion-item ng-repeat="atv in atividadesModeloCache | filter: filtro" class="item item-icon-left">
+	
+		    
+		    	<i class="icon ion-home"></i>
+		    	<h2>{{atv.tarefa.descricao}}</h2>
+	
+		    <ion-option-button class="button-positive" ng-click="share(atv.tarefa)">Share</ion-option-button>
+		    <ion-option-button class="button-info" ng-click="edit(atv.tarefa)">Edit</ion-option-button>
+		    
+  		</ion-item>
+	</ion-list>
     
   </ion-content>
 </ion-view>

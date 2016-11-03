@@ -1,0 +1,21 @@
+{
+	"l_adv_app" :[{
+	  			"adv":{
+	  				"id":1,
+					"descricao":"Descrição da Advertencia",
+					"detalhes":"Detalhes longo da advertencia",
+					"contabilizaMesada":true,
+					"pontuacaoReferencia":5.5,
+					"valorReferencia":0
+	  			}
+	  		},{
+	  		"adv":{
+	  				"id":2,
+					"descricao":"Descrição da Advertencia",
+					"detalhes":"Detalhes longo da advertencia",
+					"contabilizaMesada":true,
+					"pontuacaoReferencia":6.5,
+					"valorReferencia":0
+  			}
+  	}]
+  }

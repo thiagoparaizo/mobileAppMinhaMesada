@@ -151,8 +151,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   $urlRouterProvider.otherwise('/tab/dash');
 
 })
-.run(function ($rootScope, $location, $state) {
+.run(function ($rootScope, $location, $state, $ionicLoading) {
  console.log('run...');
+
  
  $rootScope.go = function ( state ) {
 		$state.go(state);
@@ -162,8 +163,40 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 	$rootScope.goReload = function () {
 		$state.go($state.current, {}, {reload: true});
 	};
+	
+	//função para simular href nos botoes
+	$rootScope.locationGo = function ( path ) {
+		$location.path(path);
+	};
  
- $rootScope.userProfile = localStorage.getItem("minhamesadaappuserProfile"); 
+	$rootScope.show = function(msg, duracao) {
+	    var msgLocal = 'Carregando...';
+	    var duracaoLocal = 3000;
+	    
+	    if(msg){
+	    	msgLocal = msg;
+	    }
+	    if(duracao){
+	    	duracaoLocal = duracao;
+	    }
+	    
+		$ionicLoading.show({
+	      template: msgLocal,
+	      duration: duracaoLocal
+	    }).then(function(){
+	       console.log("The loading indicator is now displayed");
+	    });
+	  };
+	  
+	  $rootScope.hide = function(){
+    $ionicLoading.hide().then(function(){
+       console.log("The loading indicator is now hidden");
+    });
+  };
+	
+ //$rootScope.userProfile = localStorage.getItem("minhamesadaappuserProfile"); 
+	
+	
   //Rotas que necessitam do login
  
  

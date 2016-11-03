@@ -2,21 +2,31 @@
   <ion-content>
     
     <div ng-show="{{cahceLocal.l_dep}}">
-    	<ion-list>
-	      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="dep in cahceLocal.l_dep" type="item-text-wrap" href="#/tab/dependentes/{{dep.uid}}">
-	        
-	        <img ng-src="{{dep.d_pess.photoURL}}">
-	         <h2>{{dep.d_pess.apelido}}</h2>
-	        <p>{{dep.d_pess.displayName}}</p>
-	        <i class="icon ion-chevron-right icon-accessory"></i>
-	      </ion-item>
-	    </ion-list>
+    	
+	    <ion-list type="card" show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">
+  		<ion-item ng-repeat="dep in cahceLocal.l_dep" class="item-thumbnail-left">
+			<img ng-src="{{dep.d_pess.photoURL}}">
+		    <h2>{{dep.d_pess.apelido}}</h2>
+		    <p>{{dep.d_pess.displayName}}</p>
+    
+		    <ion-option-button class="button-positive" ng-click="locationGo('/tab/dependentes/{{dep.uid}}')">Detalhes</ion-option-button>
+		    <ion-option-button class="button-info" ng-click="edit(atv.tarefa)">Editar</ion-option-button>
+		    <ion-delete-button class="ion-minus-circled" ng-click="remove(atv.tarefa)"></ion-delete-button>
+		    <ion-reorder-button class="ion-navicon" on-reorder="reorderItem(atv.tarefa, $fromIndex, $toIndex)"></ion-reorder-button>
+
+  		</ion-item>
+	</ion-list>
+	    
+	    
 	    <a href="#/tab/dependentes/dependente-add" title="Add." class="balanced">Add+</a>
     </div>
     <div ng-show="{{!cahceLocal.l_dep}}">
    		Não possuí dependentes cadastrados!
    		<a href="#/tab/dependentes/dependente-add" title="Add." class="balanced">Add</a>
    	</div>
+   	
+   	
+   	
     
   </ion-content>
 </ion-view>

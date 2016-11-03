@@ -1,0 +1,193 @@
+[{
+		  		"tarefa":{
+					"id":1,
+					"descricao":"Tarefa 1",
+					"detalhes":"Detalhes longo da tarefa 1",
+					"necessarioAprovacao":false,
+					"pontuacaoReferencia":5.5,
+					"valorReferencia":0,
+					"lembretes":{
+						"lembreteGenitor":{
+							"lembreteAtivado":true,
+							"tempoLembrete":5,
+							"lembreteAtivadoFinalDeSemana":true
+						},
+						"lembreteGerenciado":{
+							"lembreteAtivado":true,
+							"tempoLembrete":5,
+							"lembreteAtivadoFinalDeSemana":true
+						}
+					},
+					"avisos":{
+						"avisosGenitor":{
+							"avisoCumprimentoAtivado":true,
+							"avisoNaoCumprimentoAtivado":true
+						},
+						"avisosGerenciado":{
+							"avisoApprovedAtivado":true,
+							"avisoTarefaAdvertenciaCriadaAtivado":true
+						}
+					}
+					
+  				}
+	  		},{
+	  			"tarefa":{
+					"id":2,
+					"descricao":"Tarefa 2",
+					"detalhes":"Detalhes longo da tarefa 2 ",
+					"necessarioAprovacao":false,
+					"pontuacaoReferencia":5.5,
+					"valorReferencia":0,
+					"lembretes":{
+						"lembreteGenitor":{
+							"lembreteAtivado":true,
+							"tempoLembrete":5,
+							"lembreteAtivadoFinalDeSemana":true
+						},
+						"lembreteGerenciado":{
+							"lembreteAtivado":true,
+							"tempoLembrete":5,
+							"lembreteAtivadoFinalDeSemana":true
+						}
+					},
+					"avisos":{
+						"avisosGenitor":{
+							"avisoCumprimentoAtivado":true,
+							"avisoNaoCumprimentoAtivado":true
+						},
+						"avisosGerenciado":{
+							"avisoApprovedAtivado":true,
+							"avisoTarefaAdvertenciaCriadaAtivado":true
+						}
+					}
+					
+  				}
+	  		},{
+	  			"tarefa":{
+					"id":3,
+					"descricao":"Estudar para Prova",
+					"detalhes":"Detalhes longo da tarefa estudar...",
+					"necessarioAprovacao":false,
+					"pontuacaoReferencia":5.5,
+					"valorReferencia":0,
+					"lembretes":{
+						"lembreteGenitor":{
+							"lembreteAtivado":true,
+							"tempoLembrete":5,
+							"lembreteAtivadoFinalDeSemana":true
+						},
+						"lembreteGerenciado":{
+							"lembreteAtivado":true,
+							"tempoLembrete":5,
+							"lembreteAtivadoFinalDeSemana":true
+						}
+					},
+					"avisos":{
+						"avisosGenitor":{
+							"avisoCumprimentoAtivado":true,
+							"avisoNaoCumprimentoAtivado":true
+						},
+						"avisosGerenciado":{
+							"avisoApprovedAtivado":true,
+							"avisoTarefaAdvertenciaCriadaAtivado":true
+						}
+					}
+					
+  				}
+	  },{
+	  			"tarefa":{
+					"id":4,
+					"descricao":"Limpar o quarto",
+					"detalhes":"Detalhes longo da tarefa estudar...",
+					"necessarioAprovacao":false,
+					"pontuacaoReferencia":5.5,
+					"valorReferencia":0,
+					"lembretes":{
+						"lembreteGenitor":{
+							"lembreteAtivado":true,
+							"tempoLembrete":5,
+							"lembreteAtivadoFinalDeSemana":true
+						},
+						"lembreteGerenciado":{
+							"lembreteAtivado":true,
+							"tempoLembrete":5,
+							"lembreteAtivadoFinalDeSemana":true
+						}
+					},
+					"avisos":{
+						"avisosGenitor":{
+							"avisoCumprimentoAtivado":true,
+							"avisoNaoCumprimentoAtivado":true
+						},
+						"avisosGerenciado":{
+							"avisoApprovedAtivado":true,
+							"avisoTarefaAdvertenciaCriadaAtivado":true
+						}
+					}
+					
+  				}
+	  },{
+	  			"tarefa":{
+					"id":5,
+					"descricao":"Arrumar o material escolar",
+					"detalhes":"Detalhes longo da tarefa estudar...",
+					"necessarioAprovacao":false,
+					"pontuacaoReferencia":5.5,
+					"valorReferencia":0,
+					"lembretes":{
+						"lembreteGenitor":{
+							"lembreteAtivado":true,
+							"tempoLembrete":5,
+							"lembreteAtivadoFinalDeSemana":true
+						},
+						"lembreteGerenciado":{
+							"lembreteAtivado":true,
+							"tempoLembrete":5,
+							"lembreteAtivadoFinalDeSemana":true
+						}
+					},
+					"avisos":{
+						"avisosGenitor":{
+							"avisoCumprimentoAtivado":true,
+							"avisoNaoCumprimentoAtivado":true
+						},
+						"avisosGerenciado":{
+							"avisoApprovedAtivado":true,
+							"avisoTarefaAdvertenciaCriadaAtivado":true
+						}
+					}
+					
+  				}
+	  },{
+	  			"tarefa":{
+					"id":6,
+					"descricao":"Dar banho no Gato",
+					"detalhes":"Detalhes longo da tarefa estudar...",
+					"necessarioAprovacao":false,
+					"pontuacaoReferencia":5.5,
+					"valorReferencia":0,
+					"lembretes":{
+						"lembreteGenitor":{
+							"lembreteAtivado":true,
+							"tempoLembrete":5,
+							"lembreteAtivadoFinalDeSemana":true
+						},
+						"lembreteGerenciado":{
+							"lembreteAtivado":true,
+							"tempoLembrete":5,
+							"lembreteAtivadoFinalDeSemana":true
+						}
+					},
+					"avisos":{
+						"avisosGenitor":{
+							"avisoCumprimentoAtivado":true,
+							"avisoNaoCumprimentoAtivado":true
+						},
+						"avisosGerenciado":{
+							"avisoApprovedAtivado":true,
+							"avisoTarefaAdvertenciaCriadaAtivado":true
+						}
+					}
+					
+  				}
+	  }]

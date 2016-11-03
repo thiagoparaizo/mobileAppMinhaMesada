@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('LoginCtrl', function($scope, $rootScope, LoginService, $ionicPopup, $state, CahceService) {
+.controller('LoginCtrl', function($scope, $rootScope, LoginService, $ionicPopup, $ionicLoading, $state, $location, CahceService) {
 	$scope.showLoaderLogin = false;
 	$scope.showLoaderLoginFacebook = false;
 	$scope.showLoaderLoginGoogle = false;
@@ -14,6 +14,13 @@ angular.module('starter.controllers', [])
 	$scope.goReload = function () {
 		$state.go($state.current, {}, {reload: true});
 	};
+	
+	//função para simular href nos botoes
+	$scope.locationGo = function ( path ) {
+		$location.path(path);
+	};
+	
+	
 	
 	
 	/*$scope.gravarLoginCredentias = function(usuario, token){
@@ -32,6 +39,9 @@ angular.module('starter.controllers', [])
 	$scope.login = function(user){
 		
 		$scope.showLoaderLogin = true;
+		
+		 
+		
 		
 		
 		LoginService.loginUser(user).success(function(data) {
@@ -69,12 +79,13 @@ angular.module('starter.controllers', [])
 			            }
 			    
 				});
-			
 			$scope.showLoaderLogin = false;
-			var alertPopup = $ionicPopup.alert({
-                title: 'Bem vindo ;)',
-                template: 'Tudo certo, vamos começar!'
-            });
+			//rever necessidade
+//			$scope.showLoaderLogin = false;
+//			var alertPopup = $ionicPopup.alert({
+//                title: 'Bem vindo ;)',
+//                template: 'Tudo certo, vamos começar!'
+//            });
 			
 			$state.go('tab.dash');
 			
@@ -257,6 +268,7 @@ angular.module('starter.controllers', [])
 	}
 	
 	carregarDadosDB = function(){
+		$rootScope.show('Carregando Dados...', 15000);
 		console.log('1.1 carregarDadosDB - Recuperando dados do usuário...');
 		var userId = firebase.auth().currentUser.uid;
 		
@@ -265,6 +277,7 @@ angular.module('starter.controllers', [])
 			console.log('1.2 carregarDadosDB - Recuperando dados do usuário...');
 			
 			console.log('..... on retornoUsu');
+			$rootScope.hide();
 			$rootScope.cahceLocal = snapshot.val();
 			CahceService.gravarItemCacheLocal(userId, snapshot.val());
 		});
@@ -346,6 +359,10 @@ angular.module('starter.controllers', [])
 }).controller('DependentesCtrl', function($scope, $rootScope, $stateParams, $state, $ionicPopup, DependenteService) {
 	  console.log('DependentesCtrl...');
 	  
+	  $scope.shouldShowDelete = false;
+	  $scope.shouldShowReorder = false;
+	  $scope.listCanSwipe = true
+	  
 	  $scope.dep;
 	  $scope.addDependente = function(dep){
 		  
@@ -405,9 +422,18 @@ angular.module('starter.controllers', [])
 	
 	
   
-}).controller('AtividadeMensalCtrl', function($scope, $stateParams, $state) {
+}).controller('AtividadeMensalCtrl', function($scope, $stateParams, $state, $http) {
 	console.log('ctrl Atividade Mensal');
 	
+	$scope.shouldShowDelete = false;
+	$scope.shouldShowReorder = false;
+	$scope.listCanSwipe = true
+	
+	 
+	 $http.get('./js/utils/lista_tarefas_app.json').success(function(data){
+		 $scope.atividadesModeloCache = data;
+	 });
+	console.log('atvsss: '+ JSON.stringify($scope.atividadesModeloCache, null, 4));
 	
 	
 });;
