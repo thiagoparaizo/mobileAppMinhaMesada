@@ -1,5 +1,44 @@
 angular.module('starter.controllers', [])
 
+
+.directive('clickForOptions', ['$ionicGesture', function($ionicGesture) {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            $ionicGesture.on('tap', function(e){
+
+                // Grab the content
+                var content = element[0].querySelector('.item-content');
+
+                // Grab the buttons and their width
+                var buttons = element[0].querySelector('.item-options');
+
+                if (!buttons) {
+                    console.log('There are no option buttons');
+                    return;
+                }
+                var buttonsWidth = buttons.offsetWidth;
+
+                ionic.requestAnimationFrame(function() {
+                    content.style[ionic.CSS.TRANSITION] = 'all ease-out .25s';
+
+                    if (!buttons.classList.contains('invisible')) {
+                        console.log('close');
+                        content.style[ionic.CSS.TRANSFORM] = '';
+                        setTimeout(function() {
+                            buttons.classList.add('invisible');
+                        }, 250);                
+                    } else {
+                        buttons.classList.remove('invisible');
+                        content.style[ionic.CSS.TRANSFORM] = 'translate3d(-' + buttonsWidth + 'px, 0, 0)';
+                    }
+                });     
+
+            }, element);
+        }
+    };
+}])
+
 .controller('LoginCtrl', function($scope, $rootScope, LoginService, $ionicPopup, $ionicLoading, $state, $location, CahceService) {
 	$scope.showLoaderLogin = false;
 	$scope.showLoaderLoginFacebook = false;
@@ -356,12 +395,8 @@ angular.module('starter.controllers', [])
 		$state.go($state.current, {}, {reload: true});
 	};
   
-}).controller('DependentesCtrl', function($scope, $rootScope, $stateParams, $state, $ionicPopup, DependenteService) {
+}).controller('DependentesCtrl', function($scope, $rootScope, $stateParams, $state, $ionicPopup, DependenteService, $ionicPopover) {
 	  console.log('DependentesCtrl...');
-	  
-	  $scope.shouldShowDelete = false;
-	  $scope.shouldShowReorder = false;
-	  $scope.listCanSwipe = true
 	  
 	  $scope.dep;
 	  $scope.addDependente = function(dep){
@@ -408,11 +443,11 @@ angular.module('starter.controllers', [])
 			template: 'Só mais alguns passos...'
 			});
 			$state.go('tab.dependentes');
-		  
-		  
 	  }
 	  
-	  
+		 
+		  
+		  
 	  
 })
 	
@@ -422,18 +457,69 @@ angular.module('starter.controllers', [])
 	
 	
   
-}).controller('AtividadeMensalCtrl', function($scope, $stateParams, $state, $http) {
+}).controller('AtividadeMensalCtrl', function($scope, $stateParams, $state, $http, $ionicPopover) {
 	console.log('ctrl Atividade Mensal');
-	
-	$scope.shouldShowDelete = false;
-	$scope.shouldShowReorder = false;
-	$scope.listCanSwipe = true
 	
 	 
 	 $http.get('./js/utils/lista_tarefas_app.json').success(function(data){
 		 $scope.atividadesModeloCache = data;
 	 });
 	console.log('atvsss: '+ JSON.stringify($scope.atividadesModeloCache, null, 4));
+	
+	 $scope.data = {
+			    showDelete: false,
+			    showReorder: false
+			  };
+			  
+			  $scope.edit = function(item) {
+			    alert('Edit Item: ' + item.id);
+			  };
+			  $scope.addAtividade = function(item, $event) {
+				  console.log('addAtividade...');
+				  $scope.popover.show($event);
+			  };
+			  
+			  $scope.moveItem = function(item, fromIndex, toIndex) {
+			    $scope.items.splice(fromIndex, 1);
+			    $scope.items.splice(toIndex, 0, item);
+			  };
+			  
+			  $scope.onItemDelete = function(item) {
+			    $scope.items.splice($scope.items.indexOf(item), 1);
+			  };
+			  
+			  
+			  //popover ---
+			  $ionicPopover.fromTemplateUrl('popover/atividade.html', {
+			      scope: $scope
+			   }).then(function(popover) {
+			      $scope.popover = popover;
+			   });
+			  
+			  $scope.openPopover = function($event) {
+			      $scope.popover.show($event);
+			   };
+
+			   $scope.closePopover = function() {
+			      $scope.popover.hide();
+			   };
+
+			   //Cleanup the popover when we're done with it!
+			   $scope.$on('$destroy', function() {
+			      $scope.popover.remove();
+			   });
+
+			   // Execute action on hide popover
+			   $scope.$on('popover.hidden', function() {
+			      // Execute action
+				   console.log('popover hidden...');
+			   });
+
+			   // Execute action on remove popover
+			   $scope.$on('popover.removed', function() {
+			      // Execute action
+				   console.log('popover removed...');
+			   });
 	
 	
 });;

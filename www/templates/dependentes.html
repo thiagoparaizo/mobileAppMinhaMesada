@@ -2,21 +2,88 @@
   <ion-content>
     
     <div ng-show="{{cahceLocal.l_dep}}">
-    	
-	    <ion-list type="card" show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">
-  		<ion-item ng-repeat="dep in cahceLocal.l_dep" class="item-thumbnail-left">
-			<img ng-src="{{dep.d_pess.photoURL}}">
-		    <h2>{{dep.d_pess.apelido}}</h2>
-		    <p>{{dep.d_pess.displayName}}</p>
-    
-		    <ion-option-button class="button-positive" ng-click="locationGo('/tab/dependentes/{{dep.uid}}')">Detalhes</ion-option-button>
-		    <ion-option-button class="button-info" ng-click="edit(atv.tarefa)">Editar</ion-option-button>
-		    <ion-delete-button class="ion-minus-circled" ng-click="remove(atv.tarefa)"></ion-delete-button>
-		    <ion-reorder-button class="ion-navicon" on-reorder="reorderItem(atv.tarefa, $fromIndex, $toIndex)"></ion-reorder-button>
 
-  		</ion-item>
-	</ion-list>
-	    
+<!--      	
+<ks-swiper-container initial-slide="3" speed="2000" loop="true" show-nav-buttons="false" slides-per-view="3" space-between="5" pagination-clickable="false" override-parameters="{effect: 'coverflow',coverflow: {rotate: 50,stretch: 0,depth: 100,modifier: 1,slideShadows : false}}">
+    <ks-swiper-slide class="swiper-slide" ng-repeat="s in [1,2,3,4,5,6,7,8]">
+       teste {{s}}
+    </ks-swiper-slide>            
+</ks-swiper-container>
+
+<ion-slide-box  show-pager="true" does-continue="true" pager-click="true" auto-play="true" slide-interval="4000">
+	<ion-slide ng-repeat="s in [1,2,3,4,5,6,7,8]">
+            teste- {{s}}
+    </ion-slide>
+</ion-slide-box>
+
+
+<ion-slide-box auto-play="true" slide-interval="4000">
+  <ion-slide>
+    <div class="box blue"><h1>BLUE</h1></div>
+  </ion-slide>
+  <ion-slide>
+    <div class="box yellow"><h1>YELLOW</h1></div>
+  </ion-slide>
+  <ion-slide>
+    <div class="box pink"><h1>PINK</h1></div>
+  </ion-slide>
+</ion-slide-box>
+--> 
+<script type="text/ng-template" id="group-template.html">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title" style="color:#fa39c3">
+          <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading">
+            <span uib-accordion-header ng-class="{'text-muted': isDisabled}">
+              {{heading}}
+            </span>
+          </a>
+        </h4>
+      </div>
+      <div class="panel-collapse collapse" uib-collapse="!isOpen">
+        <div class="panel-body" style="text-align: right" ng-transclude></div>
+      </div>
+    </div>
+  </script>
+  
+<uib-accordion close-others="oneAtATime">
+	<div uib-accordion-group class="panel-default" is-open="status.isCustomHeaderOpen" template-url="group-template.html">
+        <uib-accordion-heading>
+          Custom template with custom header template <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isCustomHeaderOpen, 'glyphicon-chevron-right': !status.isCustomHeaderOpen}"></i>
+        </uib-accordion-heading>
+        World
+      </div>
+</uib-accordion>
+
+	   <ion-list type="card">
+	   		<ion-item ng-repeat="dep in cahceLocal.l_dep">
+	   			
+				  <div class="item item-avatar">
+				    <img src="mcfly.jpg">
+				   <h2>{{dep.d_pess.apelido}}</h2>
+				   <p>{{dep.d_pess.displayName}}</p>
+				  </div>
+				
+				  <div class="item item-body">
+				   <ion-slide-box auto-play="true" slide-interval="4000" does-continue="true" show-pager="false">
+					  <ion-slide>
+					    <div class="box blue"><p>{{dep.d_pess.displayName}}</p></div>
+					  </ion-slide>
+					  <ion-slide>
+					    <div class="box yellow"><p>{{dep.d_pess.apelido}}</p></div>
+					  </ion-slide>
+					  <ion-slide>
+					    <div class="box pink"><p>{{dep.d_pess.birthDate}}</p></div>
+					  </ion-slide>
+					</ion-slide-box>
+				    
+				    
+			      </div>
+				<a href="#/tab/dependentes/{{dep.uid}}" title="Detalhar" class="balanced">Detalhar</a>
+			    <a href="#/tab/dependentes/{{dep.uid}}" title="Editar" class="positive">Editar</a>
+	   		</ion-item>
+	   </ion-list>
+	   
 	    
 	    <a href="#/tab/dependentes/dependente-add" title="Add." class="balanced">Add+</a>
     </div>
@@ -24,8 +91,7 @@
    		Não possuí dependentes cadastrados!
    		<a href="#/tab/dependentes/dependente-add" title="Add." class="balanced">Add</a>
    	</div>
-   	
-   	
+ 
    	
     
   </ion-content>
